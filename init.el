@@ -47,14 +47,49 @@
   (load-theme 'doom-molokai t))
 
 ;; Helm
-(use-package helm
-  :ensure t
-  :init
-  (setq helm-mode-fuzzy-match t)
-  (setq helm-completion-in-region-fuzzy-match t)
-  (setq helm-candidate-number-list 50))
+;;(use-package helm
+;;  :ensure t
+;;  :init
+;;  (setq helm-mode-fuzzy-match t)
+;;  (setq helm-completion-in-region-fuzzy-match t)
+;;  (setq helm-candidate-number-list 50))
 
-;; Ivy
+;; Counsel
+(use-package counsel
+  :after ivy
+  :config (counsel-mode))
+
+; Ivy
+(use-package ivy
+  :defer 0.1
+  :diminish
+  :bind (("C-c C-r" . ivy-resume)
+         ("C-x B" . ivy-switch-buffer-other-window))
+  :custom
+  (ivy-count-format "(%d/%d) ")
+  (ivy-use-virtual-buffers t)
+  :config
+  (ivy-mode)
+  (setq ivy-re-builders-alist
+      '((swiper . ivy--regex-plus)
+        (t      . ivy--regex-fuzzy))))
+
+;; Ivy Rich
+(use-package ivy-rich
+  :after ivy
+  :custom
+  (ivy-virtual-abbreviate 'full
+                          ivy-rich-switch-buffer-align-virtual-buffer t
+                          ivy-rich-path-style 'abbrev)
+  :config
+  (ivy-set-display-transformer 'ivy-switch-buffer
+                               'ivy-rich-switch-buffer-transformer))
+
+;; Swiper
+(use-package swiper
+  :after ivy
+  :bind (("C-s" . swiper)
+         ("C-r" . swiper)))
 
 ;; All The Icons
 (use-package all-the-icons :ensure t)
@@ -91,11 +126,11 @@
    :non-normal-prefix "M-SPC"
    ;; "/" '(config-rg :which-key "ripgrep")
    "TAB" '(switch-to-prev-buffer :which-key "previous buffer")
-   "SPC" '(helm-M-x :which-key "M-x")
-   "pf"  '(helm-find-file :which-key "find files")
+   "SPC" '(counsel-M-x :which-key "M-x")
+   "pf"  '(counsel-find-file :which-key "find files")
 
    ;; Buffers
-   "bb"  '(helm-buffers-list :which-key "buffers list")
+   "bb"  '(counsel-buffers-list :which-key "buffers list")
    "bd"  '(kill-this-buffer :which-key "kill buffer")
 
    ;; Windows
@@ -105,7 +140,7 @@
    "wj"  '(windmove-down :which-key "move bottom")
    "w/"  '(split-window-right :which-key "split right")
    "w-"  '(split-window-below :which-key "split bottom")
-   "wx"  '(delete-window :which-key "delete window")
+   "wd"  '(delete-window :which-key "delete window")
 
    ;; Others
    "at"  '(ansi-term :which-key "open terminal")
@@ -212,21 +247,5 @@
   (add-to-list 'js-mode-hook #'lsp-javascript-typescript-enable)
   (add-to-list 'typescript-mode-hook #'lsp-javascript-typescript-enable))
 
-
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(custom-safe-themes
-   (quote
-    ("a8c210aa94c4eae642a34aaf1c5c0552855dfca2153fa6dd23f3031ce19453d4" default)))
- '(package-selected-packages
-   (quote
-    (neotree exec-path-from-shell general which-key helm use-package evil doom-themes))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
+(provide 'init)
+;;;
