@@ -54,8 +54,23 @@
   (setq helm-completion-in-region-fuzzy-match t)
   (setq helm-candidate-number-list 50))
 
+;; Ivy
+
 ;; All The Icons
 (use-package all-the-icons :ensure t)
+
+;; Mac Terminal Fixes
+(when (memq window-system '(mac ns))
+  (use-package exec-path-from-shell
+    :ensure t
+    :config
+    (exec-path-from-shell-initialize)))
+
+;; NeoTree
+(use-package neotree
+  :ensure t
+  :init
+  (setq neo-theme (if (display-graphic-p) 'icons 'arrow)))
 
 ;; Which Key
 (use-package which-key
@@ -66,7 +81,7 @@
   :config
   (which-key-mode))
 
-;; General (custom keybinding
+ ;; General (custom keybinding
 (use-package general
   :ensure t
   :config
@@ -96,7 +111,106 @@
    "at"  '(ansi-term :which-key "open terminal")
    ))
 
+;; Flycheck
+(use-package flycheck
+  :ensure t
+  :init (global-flycheck-mode))
 
+;; LSP
+(use-package lsp-mode
+  :ensure t
+  :init
+  (add-hook 'prog-major-mode #'lsp-prog-major-mode-enable))
+
+(use-package lsp-ui
+  :ensure t
+  :init
+  (add-hook 'lsp-mode-hook 'lsp-ui-mode))
+
+;; Company mode
+(use-package company
+  :ensure t
+  :init
+  (setq company-minimum-prefix-length 3)
+  (setq company-auto-complete nil)
+  (setq company-idle-delay 0)
+  (setq company-require-match 'never)
+  (setq company-frontends
+  '(company-pseudo-tooltip-unless-just-one-frontend
+    company-preview-frontend
+    company-echo-metadata-frontend))
+  (setq tab-always-indent 'complete)
+  (defvar completion-at-point-functions-saved nil)
+  :config
+  (global-company-mode 1)
+  (define-key company-active-map (kbd "TAB") 'company-complete-common-or-cycle)
+  (define-key company-active-map (kbd "<tab>") 'company-complete-common-or-cycle)
+  (define-key company-active-map (kbd "S-TAB") 'company-select-previous)
+  (define-key company-active-map (kbd "<backtab>") 'company-select-previous)
+  (define-key company-mode-map [remap indent-for-tab-command] 'company-indent-for-tab-command)
+  (defun company-indent-for-tab-command (&optional arg)
+    (interactive "P")
+  (let ((completion-at-point-functions-saved completion-at-point-functions)
+    	(completion-at-point-functions '(company-complete-common-wrapper)))
+    (indent-for-tab-command arg)))
+
+  (defun company-complete-common-wrapper ()
+    (let ((completion-at-point-functions completion-at-point-functions-saved))
+      (company-complete-common))))
+
+(use-package company-lsp
+  :ensure t
+  :init
+  (push 'company-lsp company-backends))
+ 
+;; Powerline
+(use-package spaceline
+  :ensure t
+  :init
+  (setq powerline-default-separator 'slant)
+  :config
+  (spaceline-emacs-theme)
+  (spaceline-toggle-minor-modes-off)
+  (spaceline-toggle-buffer-size-off)
+  (spaceline-toggle-evil-state-on))
+
+;;;;;;;;;;;;;;;;;;;;;;;
+;; Language Supports ;;
+;;;;;;;;;;;;;;;;;;;;;;;
+ 
+;; JavaScript
+(use-package js2-mode
+  :ensure t
+  :init
+  (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode)))
+(use-package tern :ensure t)
+
+;; Rust
+(use-package rust-mode
+  :ensure t
+  :init
+  (add-to-list 'auto-mode-alist '("\\.rs\\'" . rust-mode)))
+
+(use-package lsp-rust
+  :ensure t
+  :init
+  (setq lsp-rust-rls-command '("rustup" "run" "nightly" "rls"))
+  (add-hook 'rust-mode-hook #'lsp-rust-enable)
+  (add-hook 'rust-mode-hook #'flycheck-mode))
+
+ ;; Typescript
+(use-package typescript-mode
+  :ensure t
+  :init
+  (add-to-list 'auto-mode-alist '("\\.ts\\'" . typescript-mode))
+  (add-to-list 'auto-mode-alist '("\\.tsx\\'" . typescript-mode)))
+
+;; LSP for JavaScript and TypeScript
+(use-package lsp-javascript-typescript
+  :ensure t
+  :init
+  (add-to-list 'js-mode-hook #'lsp-javascript-typescript-enable)
+  (add-to-list 'typescript-mode-hook #'lsp-javascript-typescript-enable))
 
 
 (custom-set-variables
@@ -109,7 +223,7 @@
     ("a8c210aa94c4eae642a34aaf1c5c0552855dfca2153fa6dd23f3031ce19453d4" default)))
  '(package-selected-packages
    (quote
-    (general which-key helm use-package evil doom-themes))))
+    (neotree exec-path-from-shell general which-key helm use-package evil doom-themes))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
