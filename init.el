@@ -47,12 +47,12 @@
   (load-theme 'doom-molokai t))
 
 ;; Helm
-;;(use-package helm
-;;  :ensure t
-;;  :init
-;;  (setq helm-mode-fuzzy-match t)
-;;  (setq helm-completion-in-region-fuzzy-match t)
-;;  (setq helm-candidate-number-list 50))
+(use-package helm
+  :ensure t
+  :init
+  (setq helm-mode-fuzzy-match t)
+  (setq helm-completion-in-region-fuzzy-match t)
+  (setq helm-candidate-number-list 50))
 
 ;; Counsel
 (use-package counsel
@@ -63,27 +63,25 @@
 (use-package ivy
   :defer 0.1
   :diminish
-  :bind (("C-c C-r" . ivy-resume)
-         ("C-x B" . ivy-switch-buffer-other-window))
   :custom
   (ivy-count-format "(%d/%d) ")
   (ivy-use-virtual-buffers t)
   :config
-  (ivy-mode)
   (setq ivy-re-builders-alist
       '((swiper . ivy--regex-plus)
-        (t      . ivy--regex-fuzzy))))
+        (t      . ivy--regex-fuzzy)))
+  (ivy-mode))
 
 ;; Ivy Rich
-(use-package ivy-rich
-  :after ivy
-  :custom
-  (ivy-virtual-abbreviate 'full
-                          ivy-rich-switch-buffer-align-virtual-buffer t
-                          ivy-rich-path-style 'abbrev)
-  :config
-  (ivy-set-display-transformer 'ivy-switch-buffer
-                               'ivy-rich-switch-buffer-transformer))
+;;(use-package ivy-rich
+;;  :after ivy
+;;  :custom
+;;  (ivy-virtual-abbreviate 'full
+;;                          ivy-rich-switch-buffer-align-virtual-buffer t
+;;                          ivy-rich-path-style 'abbrev)
+;;  :config
+;;  (ivy-set-display-transformer 'ivy-switch-buffer
+;;                               'ivy-rich-switch-buffer-transformer))
 
 ;; Swiper
 (use-package swiper
@@ -126,7 +124,7 @@
    :non-normal-prefix "M-SPC"
    ;; "/" '(config-rg :which-key "ripgrep")
    "TAB" '(switch-to-prev-buffer :which-key "previous buffer")
-   "SPC" '(counsel-M-x :which-key "M-x")
+   "SPC" '(helm-M-x :which-key "M-x")
    "pf"  '(counsel-find-file :which-key "find files")
 
    ;; Buffers
@@ -249,3 +247,17 @@
 
 (provide 'init)
 ;;;
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   (quote
+    (helm which-key use-package tern spaceline neotree lsp-ui lsp-rust lsp-javascript-typescript js2-mode ivy-rich general flycheck exec-path-from-shell evil doom-themes counsel company-lsp))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
