@@ -43,32 +43,24 @@
 (show-paren-mode  1)
 
 ;; Evil
-;;(use-package evil
-;;  :ensure t
-;;  :config
-;;  (evil-mode 1))
-
-(use-package xah-fly-keys
+(use-package evil
   :ensure t
   :config
-  (xah-fly-keys-set-layout "qwerty")
-  (setq xah-fly-use-control-key nil)
-  :init
-  (xah-fly-keys 1))
+  (evil-mode 1))
+
+;;(use-package xah-fly-keys
+;;  :ensure t
+;;  :config
+;;  (xah-fly-keys-set-layout "qwerty")
+;;  (setq xah-fly-use-control-key nil)
+;;  :init
+;;  (xah-fly-keys 1))
 
 ;; Doom Themes
 (use-package doom-themes
   :ensure t
   :config
   (load-theme 'doom-molokai t))
-
-;; Helm
-;;(use-package helm
-;;  :ensure t
-;;  :init
-;;  (setq helm-mode-fuzzy-match t)
-;;  (setq helm-completion-in-region-fuzzy-match t)
-;;  (setq helm-candidate-number-list 50))
 
 ;; Counsel
 (use-package counsel
@@ -141,7 +133,7 @@
   :config
   (which-key-mode))
 
- ;; General (custom keybinding
+ ;; General (custom keybindings)
 (use-package general
   :after which-key
   :ensure t
@@ -153,6 +145,9 @@
    ;; "/" '(config-rg :which-key "ripgrep")
    "TAB" '(switch-to-prev-buffer :which-key "previous buffer")
    "SPC" '(counsel-M-x :which-key "M-x")
+
+   ;; Projects
+   "p"   '(:ignore t :which-key "Projects")
    "pf"  '(counsel-git :which-key "search project")
 
    ;; Buffers
@@ -175,7 +170,8 @@
    "sw"  '(avy-goto-word-1 :which-key "go to word")
    "sb"  '(swiper :which-key "search buffer")
    "sr"  '(counsel-recentf :which-key "search recent")
-   "sf"  '(counsel-ag :which-key "search repo")
+   "sf"  '(counsel-git-grep :which-key "search repo")
+   "sa"  '(counsel-ag :which-key "ag")
 
    ;; Files
    "f"   '(:ignore t :which-key "Files")
@@ -184,7 +180,13 @@
    ;; Applications
    "a"   '(:ignore t :which-key "Applications")
    "at"  '(ansi-term :which-key "open terminal")
-;;   "ar"  '(ranger :which-key "ranger")
+   ;;   "ar"  '(ranger :which-key "ranger")
+   "ad"  '(dired :which-key "dired")
+
+   ;; Help
+   "h"   '(:ignore t :which-key "Help")
+   "hf"  '(counsel-describe-function :which-key "describe function")
+   "hv"  '(counsel-describe-variable :which-key "describe variable")
    ))
 
 ;; Flycheck
