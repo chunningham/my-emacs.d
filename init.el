@@ -82,15 +82,16 @@
         (t      . ivy--regex-fuzzy))))
 
 ;; Ivy Rich
-;;(use-package ivy-rich
-;;  :after ivy
-;;  :custom
-;;  (ivy-virtual-abbreviate 'full
-;;                          ivy-rich-switch-buffer-align-virtual-buffer t
-;;                          ivy-rich-path-style 'abbrev)
-;;  :config
-;;  (ivy-set-display-transformer 'ivy-switch-buffer
-;;                               'ivy-rich-switch-buffer-transformer))
+(use-package ivy-rich
+  :after ivy
+  :ensure t
+  :custom
+  (ivy-virtual-abbreviate 'full
+                          ivy-rich-switch-buffer-align-virtual-buffer t
+                          ivy-rich-path-style 'abbrev)
+  :config
+  (ivy-set-display-transformer 'ivy-switch-buffer
+                               'ivy-rich-switch-buffer-transformer))
 
 ;; Swiper
 (use-package swiper
@@ -167,7 +168,7 @@
 
    ;; Search
    "s"   '(:ignore t :which-key "Search")
-   "sw"  '(avy-goto-word-1 :which-key "go to word")
+   "sw"  '(avy-goto-word-2 :which-key "go to word")
    "sb"  '(swiper :which-key "search buffer")
    "sr"  '(counsel-recentf :which-key "search recent")
    "sf"  '(counsel-git-grep :which-key "search repo")
@@ -180,7 +181,7 @@
    ;; Applications
    "a"   '(:ignore t :which-key "Applications")
    "at"  '(ansi-term :which-key "open terminal")
-   ;;   "ar"  '(ranger :which-key "ranger")
+   "ar"  '(ranger :which-key "ranger")
    "ad"  '(dired :which-key "dired")
 
    ;; Help
