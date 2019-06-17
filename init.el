@@ -34,6 +34,7 @@
 (setq coding-system-for-write 'utf-8 )
 (setq delete-old-versions -1 )		; delete excess backup versions silently
 
+
 ;; Splash Screen
 (setq inhibit-startup-screen t)
 (setq initial-scratch-message ";; Happy Hacking")
@@ -79,7 +80,9 @@
   :config
   (setq ivy-re-builders-alist
       '((swiper . ivy--regex-plus)
-        (t      . ivy--regex-fuzzy))))
+        (t      . ivy--regex-fuzzy)))
+  :init
+  (ivy-mode))
 
 ;; Ivy Rich
 (use-package ivy-rich
@@ -143,9 +146,9 @@
    :states '(normal visual insert emacs)
    :prefix "SPC"
    :non-normal-prefix "M-SPC"
-   ;; "/" '(config-rg :which-key "ripgrep")
-   "TAB" '(switch-to-prev-buffer :which-key "previous buffer")
+   "TAB" '(switch-to-other-buffer :which-key "previous buffer")
    "SPC" '(counsel-M-x :which-key "M-x")
+   "/"   '(counsel-rg :which-key "ripgrep")
 
    ;; Projects
    "p"   '(:ignore t :which-key "Projects")
@@ -153,7 +156,8 @@
 
    ;; Buffers
    "b"   '(:ignore t :which-key "Buffers")
-   "bb"  '(counsel-buffers-list :which-key "buffers list")
+   "bb"  '(counsel-switch-buffer :which-key "switch buffer")
+   "bo"  '(counsel-switch-buffer-other-window :which-key "bb other window")
    "bd"  '(kill-this-buffer :which-key "kill buffer")
 
    ;; Windows
@@ -168,11 +172,16 @@
 
    ;; Search
    "s"   '(:ignore t :which-key "Search")
-   "sw"  '(avy-goto-word-2 :which-key "go to word")
+   "sw"  '(avy-goto-word-0 :which-key "go to word")
    "sb"  '(swiper :which-key "search buffer")
    "sr"  '(counsel-recentf :which-key "search recent")
    "sf"  '(counsel-git-grep :which-key "search repo")
    "sa"  '(counsel-ag :which-key "ag")
+   "sc"  '(counsel-yank-pop :which-key "Copy/Paste")
+
+   ;; Themes
+   "t"   '(:ignore t :which-key "Themes")
+   "ts"  '(counsel-load-theme :which-key "load theme")
 
    ;; Files
    "f"   '(:ignore t :which-key "Files")
@@ -182,12 +191,12 @@
    "a"   '(:ignore t :which-key "Applications")
    "at"  '(ansi-term :which-key "open terminal")
    "ar"  '(ranger :which-key "ranger")
-   "ad"  '(dired :which-key "dired")
 
    ;; Help
    "h"   '(:ignore t :which-key "Help")
    "hf"  '(counsel-describe-function :which-key "describe function")
    "hv"  '(counsel-describe-variable :which-key "describe variable")
+   "hk"  '(counsel-descbinds :which-key "describe keybindings")
    ))
 
 ;; Flycheck
@@ -290,19 +299,3 @@
   :init
   (add-to-list 'js-mode-hook #'lsp-javascript-typescript-enable)
   (add-to-list 'typescript-mode-hook #'lsp-javascript-typescript-enable))
-
-;;;
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   (quote
-    (helm which-key use-package tern spaceline neotree lsp-ui lsp-rust lsp-javascript-typescript js2-mode ivy-rich general flycheck exec-path-from-shell evil doom-themes counsel company-lsp))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
