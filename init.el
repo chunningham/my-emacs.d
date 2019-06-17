@@ -1,6 +1,10 @@
 ;; Package configs
+
+;;; Code:
 (require 'package)
-(setq package-enable-at-startup nil)
+(setq package-enable-at-startup nil); tells emacs not to load any packages before starting up
+;; the following lines tell emacs where on the internet to look up
+;; for new packages.
 (setq package-archives '(("org"	  . "http://orgmode.org/elpa/")
 			 ("gnu"	  . "http://elpa.gnu.org/packages/")
 			 ("melpa" . "https://melpa.org/packages/")))
@@ -25,6 +29,10 @@
 ;; Other configs
 (setq make-backup-files nil)
 (setq auto-save-default nil)
+(setq ring-bell-function 'ignore )	; silent bell when you make a mistake
+(setq coding-system-for-read 'utf-8 )	; use utf-8 by default
+(setq coding-system-for-write 'utf-8 )
+(setq delete-old-versions -1 )		; delete excess backup versions silently
 
 ;; Splash Screen
 (setq inhibit-startup-screen t)
@@ -35,10 +43,18 @@
 (show-paren-mode  1)
 
 ;; Evil
-(use-package evil
+;;(use-package evil
+;;  :ensure t
+;;  :config
+;;  (evil-mode 1))
+
+(use-package xah-fly-keys
   :ensure t
   :config
-  (evil-mode 1))
+  (xah-fly-keys-set-layout "qwerty")
+  (setq xah-fly-use-control-key nil)
+  :init
+  (xah-fly-keys 1))
 
 ;; Doom Themes
 (use-package doom-themes
@@ -47,30 +63,31 @@
   (load-theme 'doom-molokai t))
 
 ;; Helm
-(use-package helm
-  :ensure t
-  :init
-  (setq helm-mode-fuzzy-match t)
-  (setq helm-completion-in-region-fuzzy-match t)
-  (setq helm-candidate-number-list 50))
+;;(use-package helm
+;;  :ensure t
+;;  :init
+;;  (setq helm-mode-fuzzy-match t)
+;;  (setq helm-completion-in-region-fuzzy-match t)
+;;  (setq helm-candidate-number-list 50))
 
 ;; Counsel
 (use-package counsel
   :after ivy
+  :ensure t
   :config (counsel-mode))
 
-; Ivy
+;; Ivy
 (use-package ivy
   :defer 0.1
   :diminish
+  :ensure t
   :custom
   (ivy-count-format "(%d/%d) ")
   (ivy-use-virtual-buffers t)
   :config
   (setq ivy-re-builders-alist
       '((swiper . ivy--regex-plus)
-        (t      . ivy--regex-fuzzy)))
-  (ivy-mode))
+        (t      . ivy--regex-fuzzy))))
 
 ;; Ivy Rich
 ;;(use-package ivy-rich
@@ -86,11 +103,21 @@
 ;; Swiper
 (use-package swiper
   :after ivy
-  :bind (("C-s" . swiper)
-         ("C-r" . swiper)))
+  :ensure t)
+
+;; Avy
+(use-package avy
+  :ensure t)
+
+;; Ranger
+(use-package ranger
+  :ensure t
+  :config
+  (setq ranger-cleanup-eagerly t))
 
 ;; All The Icons
-(use-package all-the-icons :ensure t)
+(use-package all-the-icons
+  :ensure t)
 
 ;; Mac Terminal Fixes
 (when (memq window-system '(mac ns))
@@ -104,7 +131,7 @@
   :ensure t
   :init
   (setq neo-theme (if (display-graphic-p) 'icons 'arrow)))
-
+ 
 ;; Which Key
 (use-package which-key
   :ensure t
@@ -116,6 +143,7 @@
 
  ;; General (custom keybinding
 (use-package general
+  :after which-key
   :ensure t
   :config
   (general-define-key
@@ -124,14 +152,16 @@
    :non-normal-prefix "M-SPC"
    ;; "/" '(config-rg :which-key "ripgrep")
    "TAB" '(switch-to-prev-buffer :which-key "previous buffer")
-   "SPC" '(helm-M-x :which-key "M-x")
-   "pf"  '(counsel-find-file :which-key "find files")
+   "SPC" '(counsel-M-x :which-key "M-x")
+   "pf"  '(counsel-git :which-key "search project")
 
    ;; Buffers
+   "b"   '(:ignore t :which-key "Buffers")
    "bb"  '(counsel-buffers-list :which-key "buffers list")
    "bd"  '(kill-this-buffer :which-key "kill buffer")
 
    ;; Windows
+   "w"   '(:ignore t :which-key "Windows")
    "wl"  '(windmove-right :which-key "move right")
    "wh"  '(windmove-left :which-key "move left")
    "wk"  '(windmove-up :which-key "move up")
@@ -140,8 +170,21 @@
    "w-"  '(split-window-below :which-key "split bottom")
    "wd"  '(delete-window :which-key "delete window")
 
-   ;; Others
+   ;; Search
+   "s"   '(:ignore t :which-key "Search")
+   "sw"  '(avy-goto-word-1 :which-key "go to word")
+   "sb"  '(swiper :which-key "search buffer")
+   "sr"  '(counsel-recentf :which-key "search recent")
+   "sf"  '(counsel-ag :which-key "search repo")
+
+   ;; Files
+   "f"   '(:ignore t :which-key "Files")
+   "ff"  '(counsel-find-file :which-key "find file")
+
+   ;; Applications
+   "a"   '(:ignore t :which-key "Applications")
    "at"  '(ansi-term :which-key "open terminal")
+;;   "ar"  '(ranger :which-key "ranger")
    ))
 
 ;; Flycheck
@@ -245,7 +288,6 @@
   (add-to-list 'js-mode-hook #'lsp-javascript-typescript-enable)
   (add-to-list 'typescript-mode-hook #'lsp-javascript-typescript-enable))
 
-(provide 'init)
 ;;;
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
