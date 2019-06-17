@@ -192,6 +192,14 @@
    "at"  '(ansi-term :which-key "open terminal")
    "ar"  '(ranger :which-key "ranger")
 
+   ;; Emacs
+   "e"   '(:ignore t :which-key "Emacs")
+   "eq"  '(:ignore :which-key "quit?")
+   "eQ"  '(kill-emacs :which-key "QUIT!")
+   "er"  '(:ignore t :which-key "restart?")
+   "eR"  '(:ignore t :which-key "RESTART!")
+   "ep"  '(counsel-list-processes :which-key "list processes")
+   
    ;; Help
    "h"   '(:ignore t :which-key "Help")
    "hf"  '(counsel-describe-function :which-key "describe function")
