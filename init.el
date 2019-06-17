@@ -94,7 +94,13 @@
                           ivy-rich-path-style 'abbrev)
   :config
   (ivy-set-display-transformer 'ivy-switch-buffer
-                               'ivy-rich-switch-buffer-transformer))
+                               'ivy-rich-switch-buffer-transformer)
+  :init
+  (ivy-rich-mode 1))
+
+;; flx to fix fuzzy matching
+(use-package flx
+  :ensure t)
 
 ;; Swiper
 (use-package swiper
@@ -127,7 +133,11 @@
   :ensure t
   :init
   (setq neo-theme (if (display-graphic-p) 'icons 'arrow)))
- 
+
+;; Org Brain
+(use-package org-brain
+  :ensure t)
+
 ;; Which Key
 (use-package which-key
   :ensure t
@@ -187,6 +197,11 @@
    "f"   '(:ignore t :which-key "Files")
    "ff"  '(counsel-find-file :which-key "find file")
 
+   ;; Org Mode
+   "o"   '(:ignore t :which-key "Org")
+   "oa"  '(org-agenda :which-key "agenda")
+   "ob"  '(org-brain-visualize :which-key "brain")
+   
    ;; Applications
    "a"   '(:ignore t :which-key "Applications")
    "at"  '(ansi-term :which-key "open terminal")
@@ -307,3 +322,17 @@
   :init
   (add-to-list 'js-mode-hook #'lsp-javascript-typescript-enable)
   (add-to-list 'typescript-mode-hook #'lsp-javascript-typescript-enable))
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   (quote
+    (flx ivy-hydra xah-fly-keys which-key use-package tern spaceline ranger neotree lsp-ui lsp-rust lsp-javascript-typescript js2-mode ivy-rich helm general flycheck exec-path-from-shell evil doom-themes counsel company-lsp avy))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
