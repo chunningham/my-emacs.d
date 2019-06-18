@@ -34,7 +34,6 @@
 (setq coding-system-for-write 'utf-8 )
 (setq delete-old-versions -1 )		; delete excess backup versions silently
 
-
 ;; Splash Screen
 (setq inhibit-startup-screen t)
 (setq initial-scratch-message ";; Happy Hacking")
@@ -138,6 +137,14 @@
 (use-package org-brain
   :ensure t)
 
+;; Magit
+(use-package magit
+  :ensure t)
+
+;; Git Timemachine
+(use-package git-timemachine
+  :ensure t)
+
 ;; Which Key
 (use-package which-key
   :ensure t
@@ -196,6 +203,11 @@
    ;; Files
    "f"   '(:ignore t :which-key "Files")
    "ff"  '(counsel-find-file :which-key "find file")
+
+   ;; Git
+   "g"   '(:ignore t :which-key "Git")
+   "gs"  '(:ignore t :which-key "status")
+   "gt"  '(:ignore t :which-key "time machine")
 
    ;; Org Mode
    "o"   '(:ignore t :which-key "Org")
@@ -329,7 +341,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (flx ivy-hydra xah-fly-keys which-key use-package tern spaceline ranger neotree lsp-ui lsp-rust lsp-javascript-typescript js2-mode ivy-rich helm general flycheck exec-path-from-shell evil doom-themes counsel company-lsp avy))))
+    (2048-game magit flx ivy-hydra xah-fly-keys which-key use-package tern spaceline ranger neotree lsp-ui lsp-rust lsp-javascript-typescript js2-mode ivy-rich helm general flycheck exec-path-from-shell evil doom-themes counsel company-lsp avy))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
