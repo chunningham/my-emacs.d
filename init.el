@@ -170,6 +170,13 @@
    ;; Projects
    "p"   '(:ignore t :which-key "Projects")
    "pf"  '(counsel-git :which-key "search project")
+   "ps"  '(:ignore :which-key "switch project")
+   "pd"  '(:ignore :which-key "kill project")
+   "pa"  '(:ignore :which-key "add buffer to project")
+   "pn"  '(:ignore :which-key "rename project")
+   "pr"  '(:ignore :which-key "remove buffer from project")
+   "pn"  '(:ignore :which-key "next project")
+   "pp"  '(:ignore :which-key "previous project")
 
    ;; Buffers
    "b"   '(:ignore t :which-key "Buffers")
