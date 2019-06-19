@@ -213,8 +213,8 @@
 
    ;; Git
    "g"   '(:ignore t :which-key "Git")
-   "gs"  '(:ignore t :which-key "status")
-   "gt"  '(:ignore t :which-key "time machine")
+   "gs"  '(magit-status :which-key "status")
+   "gt"  '(git-timemachine :which-key "time machine")
 
    ;; Org Mode
    "o"   '(:ignore t :which-key "Org")
