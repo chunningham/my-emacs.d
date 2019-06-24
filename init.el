@@ -94,8 +94,13 @@
   :config
   (ivy-set-display-transformer 'ivy-switch-buffer
                                'ivy-rich-switch-buffer-transformer)
-  :init
   (ivy-rich-mode 1))
+
+;; Ivy Icons
+(use-package all-the-icons-ivy
+  :ensure t
+  :config
+  (all-the-icons-ivy-setup))
 
 ;; flx to fix fuzzy matching
 (use-package flx
@@ -145,6 +150,21 @@
 (use-package git-timemachine
   :ensure t)
 
+;; Hydra
+(use-package hydra
+  :ensure t
+  :config
+  (defhydra hydra-windows (:color red)
+    "windows"
+    ("/" split-window-right "split right")
+    ("-" split-window-below "split below")
+    ("h" windmove-left "left")
+    ("l" windmove-right "right")
+    ("k" windmove-up "up")
+    ("j" windmove-down "down")
+    ("d" delete-window "delete")
+    ("q" nil "quit")))
+
 ;; Which Key
 (use-package which-key
   :ensure t
@@ -185,14 +205,7 @@
    "bd"  '(kill-this-buffer :which-key "kill buffer")
 
    ;; Windows
-   "w"   '(:ignore t :which-key "Windows")
-   "wl"  '(windmove-right :which-key "move right")
-   "wh"  '(windmove-left :which-key "move left")
-   "wk"  '(windmove-up :which-key "move up")
-   "wj"  '(windmove-down :which-key "move bottom")
-   "w/"  '(split-window-right :which-key "split right")
-   "w-"  '(split-window-below :which-key "split bottom")
-   "wd"  '(delete-window :which-key "delete window")
+   "w"   '(hydra-windows/body t :which-key "Windows")
 
    ;; Search
    "s"   '(:ignore t :which-key "Search")
