@@ -53,6 +53,8 @@
 ;;  :config
 ;;  (xah-fly-keys-set-layout "qwerty")
 ;;  (setq xah-fly-use-control-key nil)
+;;  (setq xah-fly-use-meta-key nil)
+;;  (setq 
 ;;  :init
 ;;  (xah-fly-keys 1))
 
@@ -101,6 +103,20 @@
   :ensure t
   :config
   (all-the-icons-ivy-setup))
+
+;; Ivy-Posframe
+(use-package ivy-posframe
+  :after ivy
+  :ensure t
+  :config
+  (setq ivy-posframe-display-functions-alist '((swiper . ivy-posframe-display-at-window-bottom-left)
+					       (t . ivy-posframe-display-at-point)))
+  (setq ivy-posframe-border-width 1)
+  (setq ivy-posframe-parameters
+      '((left-fringe . 8)
+        (right-fringe . 8)))
+  :init
+  (ivy-posframe-mode 1))
 
 ;; flx to fix fuzzy matching
 (use-package flx
@@ -205,7 +221,7 @@
    "bd"  '(kill-this-buffer :which-key "kill buffer")
 
    ;; Windows
-   "w"   '(hydra-windows/body t :which-key "Windows")
+   "w"   '(hydra-windows/body :which-key "Windows")
 
    ;; Search
    "s"   '(:ignore t :which-key "Search")
@@ -359,9 +375,12 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(ivy-count-format "(%d/%d) ")
+ '(ivy-use-virtual-buffers t)
+ '(ivy-virtual-abbreviate (quote full))
  '(package-selected-packages
    (quote
-    (2048-game magit flx ivy-hydra xah-fly-keys which-key use-package tern spaceline ranger neotree lsp-ui lsp-rust lsp-javascript-typescript js2-mode ivy-rich helm general flycheck exec-path-from-shell evil doom-themes counsel company-lsp avy))))
+    (ivy-posframe 2048-game magit flx ivy-hydra xah-fly-keys which-key use-package tern spaceline ranger neotree lsp-ui lsp-rust lsp-javascript-typescript js2-mode ivy-rich helm general flycheck exec-path-from-shell evil doom-themes counsel company-lsp avy))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
